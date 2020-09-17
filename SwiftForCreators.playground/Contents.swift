@@ -107,6 +107,19 @@ let numberToString = String(number)
 
 //MARK: - 类型
 
+// 写法 1: Swift 自动推断其类型
+let inferredInt = 1
+let inferredDouble = 5.0
+let inferredString = "文本"
+let inferredBool = true
+
+// 写法 2: 人工明确说明其类型
+let explicitInt: Int = 1
+let explicitDouble: Double = 5.0
+let explicitString: String = "文本"
+let explicitBool: Bool = true
+
+
 var day = "5"
 let output = "星期 " + day + "，快放假了！"
 
