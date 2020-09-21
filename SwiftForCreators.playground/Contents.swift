@@ -1,8 +1,10 @@
 import Foundation
+/**/
 
 let introduction = "你好，创作者!"
 
 //MARK: - 代码注释
+
 // 一段较短的注释
 
 /*
@@ -12,6 +14,7 @@ let introduction = "你好，创作者!"
  
 
 //MARK: - 常量与变量
+
 let amountOfDaysInAWeek = 7
 
 
@@ -19,8 +22,8 @@ var dayOfTheWeek = 1
 dayOfTheWeek = 3
 
 
-
 //MARK: - 运算符
+
 let a = 10
 let b = 3
 let c = 10
@@ -122,7 +125,76 @@ let explicitBool: Bool = true
 
 var day = "5"
 let output = "星期 " + day + "，快放假了！"
-
 let newOutput = "星期 \(day)，快放假了！"
 
+
+//MARK: - 函数
+
+print("在 Swift 中，5 除以 3 的结果是：\(5 / 3)")
+
+
+// 函数 1
+func driveForward() {
+    print("车不断的向前开")
+}
+
+// 函数 2
+func driveForward(meters: Int) {
+    print("车向前开 \(meters) 米")
+}
+
+// 调用函数
+driveForward()
+driveForward(meters: 100)
+
+// 定义
+func circumference(diameter: Double) {
+    print("圆的周长为 \(diameter * 3.14)")
+}
+
+// 使用
+circumference(diameter: 10)
+
+// 第 3 版写法
+func driveTowards(_ direction: String = "前", for meters: Int) {
+    print("向\(direction)走 \(meters) 米")
+}
+
+driveTowards(for: 100)  //不明确说明，默认往前走
+driveTowards("后", for: 100) //明确说明方向，比如向后
+
+
+func rollDice() -> Int {
+    Int.random(in: 1...6)
+}
+
+print("🎲 骰子投出的点数是 \(rollDice())")
+
+
+if isArrivedAtHome(distanceToHomeInMeters: 3) {
+    print("欢迎回家！")
+}
+
+func isArrivedAtHome(distanceToHomeInMeters: Int) -> Bool {
+    distanceToHomeInMeters < 5 ? true : false
+}
+
+struct ReturnType {}
+struct ParameterType {}
+let actualValue = ParameterType()
+
+func functionName(argumentLabel parameter: ParameterType) -> ReturnType {
+    // 函数所执行的功能
+    return ReturnType()
+}
+
+functionName(argumentLabel: actualValue)
+
+//思考题
+
+"The result of the addition is \(add(3.2, 1.6))"
+
+func add(_ a: Double, _ b: Double) -> Double {
+    a + b
+}
 
