@@ -198,3 +198,146 @@ func add(_ a: Double, _ b: Double) -> Double {
     a + b
 }
 
+//MARK: - 集合
+
+var dailyStepsGoal: Int
+var weightRecords: [Double] = [70.4, 70.3, 70.1, 70.0, 69.5]
+
+print(weightRecords)
+
+weightRecords.append(69.3)
+print(weightRecords)
+
+
+weightRecords += [69.1, 69.0]
+print(weightRecords)
+
+
+weightRecords.insert(70.2, at: 2)
+print(weightRecords)
+
+weightRecords.remove(at: 8)
+print(weightRecords)
+
+weightRecords.removeSubrange(3...7)
+print(weightRecords)
+
+let weightOfTheThirdDay = weightRecords[2]
+
+let weightOfRandomDay = weightRecords.randomElement()
+
+let indexOf70_2 = weightRecords.firstIndex(of: 70.2)!
+
+
+weightRecords[0] = 70.6
+print(weightRecords)
+
+weightRecords.sort()
+print(weightRecords)
+
+weightRecords.shuffle()
+print(weightRecords)
+
+weightRecords = [70.6, 70.5, 71.2, 68.3, 70.9, 69.1]
+let targetWeight = 70.0
+let diffToTarget = weightRecords.map { ($0 - targetWeight)}
+
+print(diffToTarget)
+
+
+let aboveSeventy = weightRecords.filter { $0 >= 70.0 }
+var dateOfAboveSeventy: [String] = []
+var dateToChar = [1: "一", 2: "二", 3: "三", 4: "四", 5: "五", 6: "六", 7: "天"]
+
+for searchTarget in aboveSeventy {
+    let date = weightRecords.firstIndex(of: searchTarget)! + 1
+    dateOfAboveSeventy.append("星期" + dateToChar[date]!)
+}
+print(dateOfAboveSeventy)
+
+weightRecords.count
+weightRecords.isEmpty
+weightRecords.min()
+weightRecords.contains(68.3)
+
+let menu = [
+    ["面包", "牛奶"],
+    ["牛肉面", "茶"],
+    ["香蕉", "盖饭", "鸡腿"]
+]
+
+print(menu[2][0])
+
+// MARK: - 循环
+
+var phoneBook = ["老王" : 12345, "老李": 12345]
+
+phoneBook["小吴"] = 22332
+print(phoneBook)
+
+
+phoneBook["小吴"]  = nil
+print(phoneBook)
+
+let numberOfWang = phoneBook["老王"]
+
+phoneBook["老王"] = 13579
+print(phoneBook)
+
+phoneBook.count
+phoneBook.isEmpty
+phoneBook.contains(where: { $0.key == "老王" })
+
+let dailyMenu = [
+    "早餐": ["面包", "牛奶"],
+    "午餐": ["牛肉面", "茶"],
+    "晚餐": ["香蕉", "盖饭", "鸡腿"]
+]
+
+print(dailyMenu["午餐"]!)
+
+// MARK: - 循环
+
+let enrolledPeople = ["老王", "老李", "小吴"]
+
+for person in enrolledPeople {
+    print("你好👋，\(person)")
+}
+
+print("你好👋，老王")
+print("你好👋，老李")
+print("你好👋，小吴")
+
+let personA = enrolledPeople[0]
+    print("你好👋，\(personA)")
+let personB = enrolledPeople[1]
+    print("你好👋，\(personB)")
+let personC = enrolledPeople[2]
+    print("你好👋，\(personC)")
+
+func fireABullet() {}
+
+for _ in 1...5 {
+    fireABullet()
+}
+
+var playerLives = 3 // 共 3 个生命
+
+while playerLives > 0 {
+    let isPlayerUnlucky = Bool.random() // 生成一个随机布尔值
+    
+    if isPlayerUnlucky {
+        playerLives -= 1
+        if playerLives == 0 {
+            print("游戏结束")
+        }
+    }
+}
+
+var someCondition = false
+
+repeat {
+    // 无论条件，至少执行一遍此代码
+} while someCondition
+
+
