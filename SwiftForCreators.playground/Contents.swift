@@ -245,14 +245,20 @@ let diffToTarget = weightRecords.map { ($0 - targetWeight)}
 print(diffToTarget)
 
 
+// 从原体重数组筛选出满足条件的，组成新数组 aboveSeventy
 let aboveSeventy = weightRecords.filter { $0 >= 70.0 }
+
+// 记录 aboveSeventy 中满足条件的体重所对应的日期，并将数字的日期用字典翻译成中文
 var dateOfAboveSeventy: [String] = []
 var dateToChar = [1: "一", 2: "二", 3: "三", 4: "四", 5: "五", 6: "六", 7: "天"]
 
+// 使用循环搜索新数组，并将满足条件的日期添加至 dateOfAboveSeventy 中
 for searchTarget in aboveSeventy {
     let date = weightRecords.firstIndex(of: searchTarget)! + 1
     dateOfAboveSeventy.append("星期" + dateToChar[date]!)
 }
+
+// 打印结果
 print(dateOfAboveSeventy)
 
 weightRecords.count
@@ -341,3 +347,85 @@ repeat {
 } while someCondition
 
 
+
+// MARK: - 闭包
+func isTheFirstsmallerThanSecond(first: Int, second: Int) -> Bool {
+    return first < second
+}
+
+// 闭包写法
+let closure = { (first: Int, second: Int) -> Bool in
+    return first < second
+}
+
+var demoNumbers = [2, 18, 0, -9, 30]
+
+demoNumbers.sort()
+print(demoNumbers)
+
+
+demoNumbers.sort(by: closure)
+print(demoNumbers)
+
+demoNumbers.sort(by: { (first: Int, second: Int) -> Bool in
+    return first < second
+})
+print(demoNumbers)
+
+
+demoNumbers.sort { (first: Int, second: Int) -> Bool in
+    return first < second
+}
+print(demoNumbers)
+
+demoNumbers.sort { first, second in first < second }
+print(demoNumbers)
+
+// 升序排列
+demoNumbers.sort { $0 > $1 }
+print(demoNumbers)
+
+// 降序排列
+demoNumbers.sort { $0 < $1 }
+print(demoNumbers)
+
+
+// MARK: - 可选类型
+
+let numberOfWu: Int? = phoneBook["小吴"]
+
+var username: String? = "小王"
+
+print(username!)
+
+
+if username != nil {
+    let safelyUnwrappedUsername = username!
+    print("\(safelyUnwrappedUsername)，想听点什么")
+}
+
+username = "小王"
+
+
+if let safelyUnwrappedUsername = username {
+    print("\(safelyUnwrappedUsername)，想听点什么")
+}
+
+func guardDemo() {
+    
+    guard let safelyUnwrappedUsername = username else {
+        print("username 的值为 nil")
+        return
+    }
+
+    print("\(safelyUnwrappedUsername)，想听点什么")
+    
+}
+
+guardDemo()
+
+username = "小王"
+print("\(username ?? "你好")，想听点什么")
+
+username = nil
+print("\(username ?? "你好")，想听点什么")
