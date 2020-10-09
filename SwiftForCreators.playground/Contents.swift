@@ -429,3 +429,148 @@ print("\(username ?? "你好")，想听点什么")
 
 username = nil
 print("\(username ?? "你好")，想听点什么")
+
+
+// MARK: - 结构
+struct Player {
+    static var allPlayers: [Player] = [] // 所有玩家
+    var inventories: [InventoryItem] = []
+    var name: String  // 当前玩家姓名
+    var livesRemaining = 5 { // 当前玩家生于生命条数
+        willSet {
+            print("警告：还剩下 \(newValue) 条命")
+        }
+        didSet {
+            if livesRemaining != 0 {
+                print("已满血复活")
+            } else {
+                print("游戏结束")
+            }
+        }
+    }
+    let maxHealth = 100
+    lazy var currentHealth = maxHealth // 当前生命值
+    var isPlayerOutOfLives: Bool { // 全部生命条数是否耗尽
+        get {
+            livesRemaining == 0 ? true : false
+        }
+        set {
+            if newValue {
+                livesRemaining = 0
+            }
+        }
+    }
+    
+    // 默认初始化器，有默认值版本
+    init(name: String) {
+        self.name = name
+    }
+    
+    // 默认初始化器，无默认值版本
+    init(name: String, livesRemaining: Int, currentHealth: Int) {
+        self.name = name
+        self.livesRemaining = livesRemaining
+        self.currentHealth = currentHealth
+    }
+    
+    // 自定义初始化器，初始生命值高
+    init(name: String, livesRemaining: Int) {
+        self.name = "VIP " + name
+        self.livesRemaining = livesRemaining
+        currentHealth = 10000
+    }
+    
+    // 欢迎提示
+    func welcomePlayer() {
+        print("当前游戏账号 \(name)")
+    }
+    
+    // 玩家被打击而减血
+    mutating func damaged(by health: Int) {
+        currentHealth -= health
+        // 当前生命值低于 0 时，换用下一条命并重置当前生命值
+        if currentHealth <= 0 && livesRemaining > 0 {
+            livesRemaining -= 1
+            currentHealth = maxHealth
+        }
+        // 生命数量为 0 时，游戏结束
+        if livesRemaining == 0 {
+            print("游戏结束")
+        }
+    }
+    
+    // 调试函数，现实当前生命值及血量
+    mutating func stateReport() {
+        print("当前生命值为 \(currentHealth)，玩家还有 \(livesRemaining) 条命")
+    }
+    
+    // 给出最新添加的玩家实体
+    static func recentAddedPlayer() -> Player {
+        allPlayers[allPlayers.count - 1]
+    }
+    
+    // 增加物品
+    mutating func addItem(name: String, description: String, bonusHealth: Int) {
+        inventories.append(InventoryItem(name: name, description: description, healthBonus: bonusHealth))
+    }
+    
+    // 使用物品
+    mutating func consumeItem(at index: Int) {
+        currentHealth += inventories.remove(at: index).healthBonus
+    }
+}
+
+struct InventoryItem {
+    var name: String
+    var description: String
+    var healthBonus: Int
+}
+
+var playerCreator = Player(name: "创作者")
+for _ in 1...3 {
+    playerCreator.addItem(name: "苹果", description: "可食用蔬果，味酸甜，吃了会补充生命值", bonusHealth: 50)
+}
+playerCreator.damaged(by: 80)
+playerCreator.stateReport()
+playerCreator.consumeItem(at: 0)
+playerCreator.stateReport()
+
+
+//var playerWang = Player(name: "小王")
+//var playerZhou = Player(name: "小周")
+//Player.allPlayers.append(contentsOf: [playerWang, playerZhou])
+//print("最新添加的玩家是：\(Player.recentAddedPlayer().name)")
+
+//var playerWang = Player(name: "小王")
+//playerWang.stateReport()
+//
+//playerWang.damaged(by: 50)
+//playerWang.stateReport()
+//
+//playerWang.damaged(by: 80)
+//playerWang.damaged(by: 30)
+//playerWang.stateReport()
+
+//playerWang.isPlayerOutOfLives = true
+//print("\(playerWang.name)，初始生命值 \(playerWang.currentHealth)")
+//
+//var playerKing = Player(name: "皮卡丘", livesRemaining: 10)
+//print("\(playerKing.name)，初始生命值 \(playerKing.currentHealth)")
+
+
+struct StructName {
+    
+    // 属性
+    var property: Int
+    
+    // 初始化器
+    init(property: Int) {
+        self.property = property
+    }
+    
+    // 方法
+    func someMethod() {}
+    
+}
+
+
