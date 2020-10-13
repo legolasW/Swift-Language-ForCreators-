@@ -574,3 +574,97 @@ struct StructName {
 }
 
 
+// MARK: - 枚举，类与扩展
+// 用 Array 记录体重
+//var weightRecords = [76.7, 77.1]
+
+enum EnergySource {
+    case electricity
+    case diesel
+    case gasoline
+}
+
+var selectedVehicleEnergy = EnergySource.electricity
+print("这辆车的动力类型是：\(EnergySource.electricity)")
+
+var policyNote: String? // 政策说明
+
+policyNote = nil
+policyNote = Optional.none // 等同于 nil
+
+switch selectedVehicleEnergy {
+case .electricity:
+    policyNote = "电动车：国家补贴 5000 元人民币，鼓励购买。"
+case .diesel:
+    policyNote = "柴油车：需额外缴纳 200 元人民币作为排放处理费。"
+case .gasoline:
+    policyNote = "汽油车：无特殊政策说明。"
+}
+
+print(policyNote ?? "暂无说明")
+
+
+
+// 汽车
+class Car {
+    var brand: String
+    var year: String
+    var energy: EnergySource
+    
+    init(brand: String, year: String, energy: EnergySource) {
+        self.brand = brand
+        self.year = year
+        self.energy = energy
+    }
+}
+
+// 轿车
+class Sedan: Car {
+    var assistantEquipped: Bool
+    
+    override init(brand: String, year: String, energy: EnergySource) {
+        assistantEquipped = false
+        super.init(brand: brand, year: year, energy: energy)
+    }
+    
+    func upgradeAssistant() {
+        assistantEquipped = true
+    }
+}
+
+// 卡车
+class Truck: Car {
+    
+}
+
+
+let teslaModel3 = Sedan(brand: "Tesla", year: "2017", energy: .electricity)
+let toyotaHilux = Truck(brand: "Toyota", year: "1968", energy: .gasoline)
+
+// 创建数组 cars，用来存放 Sedan 与 Truck 的实体
+let cars = [teslaModel3, toyotaHilux]
+let firstCarInCars = cars[0] // teslaModel3
+
+// 统计数组 cars 中的轿车个数
+var sedanCount = 0
+for car in cars {
+    if car is Sedan {
+        sedanCount += 1
+    }
+}
+print("cars 中有 \(sedanCount) 辆轿车")
+
+// 将数组 cars 中所有的轿车都升级自动驾驶
+for car in cars {
+    if let teslaModel3 = car as? Sedan {
+        teslaModel3.upgradeAssistant()
+    }
+}
+
+extension Car {
+    // 添加 Computed Property
+    var quickInfo: String {
+        "The car brand is \(brand), first built on \(year)"
+    }
+}
+
