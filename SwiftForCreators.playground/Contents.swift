@@ -721,4 +721,109 @@ DispatchQueue.global(qos: .background).async {
 }
 
 
+// MARK: - 别名及协议
+
+let label: String
+let age: Int
+//let phoneBook: [String: Int]
+
+typealias Age = Int
+let ageVersionOne: Int = 50
+let ageVersionTwo: Age = 50
+
+
+//typealias PhoneBook = [String: Int]
+let phoneBookVersionOne: [String: Int] = ["小王": 12345]
+//let phoneBookVersionTwo: PhoneBook = ["小王": 12345]
+
+struct Company { }
+typealias InternetCompany = Company
+let companyVersionOne: Company = Company()
+let companyVersionTwo: InternetCompany = Company()
+
+
+// 描述性的 protocol
+protocol Expressible {
+    var name: String { get }
+    
+    init(name: String)
+}
+
+// 用户 struct
+struct User {
+    var name: String
+}
+
+// 用户 User 遵守协议 Expressible
+extension User: Expressible { }
+
+
+// 创建两个整数
+let numberOne = 10
+let numberTwo = 20
+
+// 判断其是否相等
+if numberOne == numberTwo {
+    print("两个数相等")
+}
+
+// 自定义类型提醒事项 Todo
+struct Todo: Equatable, Identifiable, Codable {
+    var content: String
+    var id = UUID()
+}
+
+// 创建两个提醒事项
+// 写法 1
+let todoOne = Todo(content: "玩游戏")
+/* 写法 2
+ {
+    "content": "玩游戏",
+    "id": "27451423-765D-4942-873D-5AF52DF955E4"
+ }
+ */
+let todoTwo = Todo(content: "写文章")
+
+// 判断其是否相同
+if todoOne == todoTwo {
+    print("两个提醒事项完全相同")
+}
+
+
+// 一年中的某一天
+struct DateOfTheYear {
+    let year: Int
+    let month: Int
+    let day: Int
+}
+
+// 满足可等性
+extension DateOfTheYear: Equatable { }
+
+// 满足可比性
+extension DateOfTheYear: Comparable {
+    static func < (lhs: DateOfTheYear, rhs: DateOfTheYear) -> Bool {
+        if lhs.year != rhs.year {
+            return lhs.year < rhs.year
+        } else if lhs.month != rhs.month {
+            return lhs.month < rhs.month
+        } else {
+            return lhs.day < rhs.day
+        }
+    }
+}
+
+let dayOne = DateOfTheYear(year: 1968, month: 8, day: 9)
+let dayTwo = DateOfTheYear(year: 2020, month: 6, day: 18)
+
+if dayOne < dayTwo {
+    print("日期 1 小于日期 2")
+}
+
+// 满足可哈希性
+extension DateOfTheYear: Hashable { }
+
+let todos = [dayOne: todoOne, dayTwo: todoTwo]
+
+
 
