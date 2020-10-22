@@ -827,3 +827,39 @@ let todos = [dayOne: todoOne, dayTwo: todoTwo]
 
 
 
+// MARK: - Error
+//fatalError()
+
+// 创建密码错误
+enum PasswordError: Error {
+    case notLongEnough
+}
+
+// 验证新建密码是否满足长度要求
+func validatePassword(_ password: String) throws -> Bool {
+    if password.count < 6 {
+        throw PasswordError.notLongEnough
+    }
+    return true
+}
+
+var password = "6419091"
+
+// do-try-catch 写法，密码 64190 的运行结果是「密码需要至少 6 位数」
+do {
+    try validatePassword(password)
+    print("密码有效")
+} catch PasswordError.notLongEnough {
+    print("密码需要至少 6 位数")
+}
+
+// try? 写法，密码 6419091 的运行结果是「验证结果是 true，密码有效」
+if let validateResult = try? validatePassword(password) {
+    print("验证结果是 \(validateResult)，密码有效")
+} else {
+    print("密码需要至少 6 位数")
+}
+
+
+// try! 写法，运行函数，但彻底忽视错误
+try! validatePassword(password)
